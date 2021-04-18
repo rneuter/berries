@@ -1,0 +1,5 @@
+- name: Update packages on cluster nodes
+  hosts: berries
+  serial: 1
+  roles:
+    - common

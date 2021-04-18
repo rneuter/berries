@@ -1,0 +1,31 @@
+- name: "Update apt cache"
+  apt:
+    update_cache: yes
+  become: true
+
+- name: "Install necessary packages"
+  apt:
+    pkg:
+    - net-tools
+    - rfkill
+  become: true
+
+- name: "Upgrade packages"
+  apt:
+    upgrade: safe
+  become: true
+
+- name: "Remove unnecessary packages"
+  apt:
+    autoremove: yes
+  become: true
+
+- name: "Check if reboot needed"
+  stat:
+    path: /var/run/reboot-required
+  register: reboot
+
+- name: "Reboot"
+  reboot:
+  when: reboot.stat.exists
+  become: true

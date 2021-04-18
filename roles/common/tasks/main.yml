@@ -20,6 +20,14 @@
     autoremove: yes
   become: true
 
+- name: "Disable Wifi interface"
+  ansible.builtin.command: rfkill block wifi
+  become: true
+
+- name: "Disable Bluetooth interface"
+  ansible.builtin.command: rfkill block bluetooth
+  become: true
+
 - name: "Check if reboot needed"
   stat:
     path: /var/run/reboot-required

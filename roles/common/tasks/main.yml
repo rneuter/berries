@@ -28,6 +28,16 @@
   ansible.builtin.command: rfkill block bluetooth
   become: true
 
+- name: Enable container features
+  replace:
+    path: /boot/firmware/cmdline.txt
+    regexp: '^([\w](?!.*\b{{ item }}\b).*)$'
+    replace: '\1 {{ item }}'
+  with_items:
+  - "cgroup_memory=1"
+  - "cgroup_enable=memory"
+  become: true
+
 - name: "Check if reboot needed"
   stat:
     path: /var/run/reboot-required

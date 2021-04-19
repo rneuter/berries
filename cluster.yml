@@ -1,5 +1,7 @@
-- name: Update packages on cluster nodes
+- name: Update packages and basic setup on cluster nodes
   hosts: berries
   serial: 1
   roles:
     - common
+  tags:
+    - setup

@@ -5,3 +5,21 @@
     - common
   tags:
     - setup
+
+- name: Setup master nodes
+  hosts: masters
+  roles:
+    - masters
+  tags:
+    - k3s
+    - masters
+
+- name: Setup worker nodes
+  hosts:
+    - masters
+    - nodes
+  roles:
+    - nodes
+  tags:
+    - k3s
+    - nodes

@@ -1,0 +1,13 @@
+- name: "Retrieve master node token"
+  include_role:
+    name: masters
+    tasks_from: token
+
+- name: "Install k3s"
+  ansible.builtin.shell:
+    cmd: /tmp/install-k3s.sh
+    creates: /usr/local/bin/k3s
+  environment:
+    K3S_URL: "https://{{ hostvars[groups['masters'][0]]['ansible_host'] }}:6443"
+    K3S_TOKEN: "{{ master_token.stdout }}"
+  when: inventory_hostname in groups['nodes']

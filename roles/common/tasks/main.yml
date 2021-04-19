@@ -15,6 +15,14 @@
     - rfkill
   become: true
 
+- name: "Download k3s install script"
+  get_url:
+    url: https://get.k3s.io
+    dest: /tmp/install-k3s.sh
+    mode: '0700'
+  tags:
+    - k3s
+
 - name: "Upgrade packages"
   apt:
     upgrade: safe
